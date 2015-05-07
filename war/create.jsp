@@ -22,7 +22,7 @@ function buildScript(css,js,tag) {
   &lt;style  type="text/css"&gt;
 </pre>
 
-<form id="editor" accept-charset="UTF-8" action="/run" method="GET" onsubmit="buildScript(this.css.value,this.js.value,this.tag.value);return false;">
+<form id="htmlForm" accept-charset="UTF-8" action="/create" method="POST">
 <textarea name="css" >
 /* Write CSS */
 
@@ -57,7 +57,8 @@ function buildScript(css,js,tag) {
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
-<input type="submit" value="Build"/>
+<input type="button" value="run" onclick="buildScript(document.getElementById('htmlForm').css.value,document.getElementById('htmlForm').js.value,document.getElementById('htmlForm').tag.value);" />
+<input type="submit" value="save"/>
 </form>
 </body>
 </html>

@@ -55,15 +55,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
       <url-pattern>/create</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>javascriptrun</servlet-name>
-        <servlet-class>jp.ktaguro.javaScriptToolBox.JavaScriptRunServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-      <servlet-name>javascriptrun</servlet-name>
-      <url-pattern>/run</url-pattern>
-    </servlet-mapping>
-
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>jsp-file</web-resource-name>
