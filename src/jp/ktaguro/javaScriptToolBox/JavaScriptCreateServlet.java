@@ -26,9 +26,11 @@ public class JavaScriptCreateServlet extends HttpServlet {
         req.getRequestDispatcher("create.jsp").forward(req, resp);
       }
   @Override
-  public void doPost(HttpServletRequest req, HttpServletResponse resp){
+  public void doPost(HttpServletRequest req, HttpServletResponse resp)
+		  throws IOException, ServletException {
       UserService service = UserServiceFactory.getUserService();
       String userId=service.getCurrentUser().getUserId();
+      String title=req.getParameter("title");
       String css=req.getParameter("css");
       String js=req.getParameter("js");
       String tag=req.getParameter("tag");
@@ -36,6 +38,7 @@ public class JavaScriptCreateServlet extends HttpServlet {
 
 	  Document.Builder docBuilder=Document.newBuilder()
 			  .addField(Field.newBuilder().setName("createUserId").setText(userId))
+			  .addField(Field.newBuilder().setName("title").setText(title))
 			  .addField(Field.newBuilder().setName("css").setText(css))
 			  .addField(Field.newBuilder().setName("js").setText(js))
 			  .addField(Field.newBuilder().setName("tag").setText(tag))
@@ -57,6 +60,7 @@ public class JavaScriptCreateServlet extends HttpServlet {
 	    } catch (RuntimeException e) {
 	    	//ignore
 	    }
+        req.getRequestDispatcher("create.jsp").forward(req, resp);
   }
 
 

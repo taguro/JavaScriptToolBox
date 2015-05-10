@@ -9,20 +9,25 @@
 create
 <body>
 <script language="JavaScript">
-function buildScript(css,js,tag) {
+function buildScript(title,css,js,tag) {
   js=js.split(/\/\/.*\n/).join("");
-  window.open('data:text/html, <!DOCTYPE html><html lang="ja"><head><title>BrowserJSEditor</title><meta charset="UTF-8"><style type="text/css">'+css+'</style><script language="javascript">'+js+'<\/script></head><body>'+tag+'</body></html>')}</script>
+  window.open('data:text/html, <!DOCTYPE html><html lang="ja"><head><title>'+title+'</title><meta charset="UTF-8"><style type="text/css">'+css+'</style><script language="javascript">'+js+'<\/script></head><body>'+tag+'</body></html>')}</script>
 
+<form id="htmlForm" accept-charset="UTF-8" action="/create" method="POST">
 <pre>
 &lt;!DOCTYPE html&gt;
 &lt;html lang="ja"&gt;
 &lt;head&gt;
-  &lt;title&gt;BrowserJSEditor&lt;/title&gt;
+  &lt;title&gt;</pre>
+<textarea name="title" >
+Write Title
+</textarea>
+<pre>
+  &lt;/title&gt;
   &lt;meta charset="UTF-8"&gt;
   &lt;style  type="text/css"&gt;
 </pre>
 
-<form id="htmlForm" accept-charset="UTF-8" action="/create" method="POST">
 <textarea name="css" >
 /* Write CSS */
 
@@ -57,7 +62,7 @@ function buildScript(css,js,tag) {
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
-<input type="button" value="run" onclick="buildScript(document.getElementById('htmlForm').css.value,document.getElementById('htmlForm').js.value,document.getElementById('htmlForm').tag.value);" />
+<input type="button" value="run" onclick="buildScript(document.getElementById('htmlForm').title.value,document.getElementById('htmlForm').css.value,document.getElementById('htmlForm').js.value,document.getElementById('htmlForm').tag.value);" />
 <input type="submit" value="save"/>
 </form>
 </body>
