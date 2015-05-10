@@ -11,7 +11,7 @@ create
 <script language="JavaScript">
 function buildScript(title,css,js,tag) {
   js=js.split(/\/\/.*\n/).join("");
-  window.open('data:text/html, <!DOCTYPE html><html lang="ja"><head><title>'+title+'</title><meta charset="UTF-8"><style type="text/css">'+css+'</style><script language="javascript">'+js+'<\/script></head><body>'+tag+'</body></html>')}</script>
+  window.open('data:text/html, <!DOCTYPE html><html lang="ja"><head><title>'+title+'</title><meta charset="UTF-8"><style type="text/css">'+css+'</style><script language="javascript">'+js+'<\/script></head><body>'+tag+'</body></html>',"_self")}</script>
 
 <form id="htmlForm" accept-charset="UTF-8" action="/create" method="POST">
 <pre>
