@@ -58,3 +58,8 @@
   height: 90%;
   border: none;
 }
+
+#htmlForm textarea{
+	width:90%;
+	height:110px;
+}
