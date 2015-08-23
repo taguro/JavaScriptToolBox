@@ -34,14 +34,14 @@ public class AuthenticationFilter implements Filter{
         HttpServletResponse response = (HttpServletResponse)_response;
         HttpSession session = request.getSession();
         if (service.isUserLoggedIn()){
+        	// login
             session.setAttribute("user", service.getCurrentUser());
-            LOG.info("Login\n");
         } else{
+        	// not login
             LOG.info("willLogin\n");
             session.removeAttribute("user");
             String url = request.getRequestURI();
             String loginurl = service.createLoginURL(url);
-            String logouturl = service.createLogoutURL("/home");
             response.sendRedirect(loginurl);
         }
         _chain.doFilter(request, response);

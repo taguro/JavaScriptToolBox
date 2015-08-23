@@ -2,7 +2,6 @@ package jp.ktaguro.javaScriptToolBox;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.StringTokenizer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,6 +30,7 @@ public class JavaScriptCreateServlet extends HttpServlet {
       UserService service = UserServiceFactory.getUserService();
       String userId=service.getCurrentUser().getUserId();
       String title=req.getParameter("title");
+      String description=req.getParameter("description");
       String css=req.getParameter("css");
       String js=req.getParameter("js");
       String tag=req.getParameter("tag");
@@ -39,19 +39,20 @@ public class JavaScriptCreateServlet extends HttpServlet {
 	  Document.Builder docBuilder=Document.newBuilder()
 			  .addField(Field.newBuilder().setName("createUserId").setText(userId))
 			  .addField(Field.newBuilder().setName("title").setText(title))
+			  .addField(Field.newBuilder().setName("description").setText(description))
 			  .addField(Field.newBuilder().setName("css").setText(css))
 			  .addField(Field.newBuilder().setName("js").setText(js))
 			  .addField(Field.newBuilder().setName("tag").setText(tag))
 			  .addField(Field.newBuilder().setName("published").setDate(new Date()));
-	    String tagStr = req.getParameter("tags");
-
-	    if (tagStr != null) {
-	      StringTokenizer tokenizer = new StringTokenizer(tagStr, ",");
-	      while (tokenizer.hasMoreTokens()) {
-	        docBuilder.addField(Field.newBuilder().setName("tag")
-	            .setAtom(tokenizer.nextToken()));
-	      }
-	    }
+//	    String tagStr = req.getParameter("tags");
+//
+//	    if (tagStr != null) {
+//	      StringTokenizer tokenizer = new StringTokenizer(tagStr, ",");
+//	      while (tokenizer.hasMoreTokens()) {
+//	        docBuilder.addField(Field.newBuilder().setName("tag")
+//	            .setAtom(tokenizer.nextToken()));
+//	      }
+//	    }
 
 	    Document doc = docBuilder.build();
 

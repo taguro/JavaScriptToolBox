@@ -26,6 +26,16 @@ Write Title
 <pre>
   &lt;/title&gt;
   &lt;meta charset="UTF-8"&gt;
+  &lt;!--
+</pre>
+
+<textarea name="description" >
+/* Write description */
+
+</textarea>
+
+<pre>
+  --&gt;
   &lt;style  type="text/css"&gt;
 </pre>
 
