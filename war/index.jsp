@@ -32,11 +32,14 @@ return false;
       </form>
     </div>
 		<%
-			Index INDEX = SearchServiceFactory.getSearchService().getIndex(
-					IndexSpec.newBuilder().setName("shared_index"));
+			String word = request.getParameter("keywords").toString();
 			Query query = Query.newBuilder()
 					.setOptions(QueryOptions.newBuilder().setLimit(30).build())
-					.build("");
+					.build(word == null ? "" : word);
+
+			Index INDEX = SearchServiceFactory.getSearchService().getIndex(
+					IndexSpec.newBuilder().setName("shared_index"));
+
 			Results<ScoredDocument> results = INDEX.search(query);
 
 			if (results != null) {
