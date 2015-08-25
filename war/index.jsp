@@ -32,7 +32,7 @@ return false;
       </form>
     </div>
 		<%
-			String word = request.getParameter("keywords").toString();
+			String word = request.getParameter("keywords");
 			Query query = Query.newBuilder()
 					.setOptions(QueryOptions.newBuilder().setLimit(30).build())
 					.build(word == null ? "" : word);
