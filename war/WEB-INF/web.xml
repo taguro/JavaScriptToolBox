@@ -18,26 +18,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
       <url-pattern>/home</url-pattern>
     </servlet-mapping>
 
-    <filter>
-      <filter-name>authentication</filter-name>
-      <filter-class>jp.ktaguro.javaScriptToolBox.AuthenticationFilter</filter-class>
-      <load-on-startup>2</load-on-startup>
-    </filter>
-	<filter-mapping>
-     <filter-name>authentication</filter-name>
-     <url-pattern>/home</url-pattern>
-	</filter-mapping>
-
-    <servlet>
-        <servlet-name>logout</servlet-name>
-        <servlet-class>jp.ktaguro.javaScriptToolBox.LogoutServlet</servlet-class>
-        <load-on-startup>3</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-      <servlet-name>logout</servlet-name>
-      <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
-
     <servlet>
         <servlet-name>javascriptcreate</servlet-name>
         <servlet-class>jp.ktaguro.javaScriptToolBox.JavaScriptCreateServlet</servlet-class>

@@ -8,6 +8,7 @@
   border-bottom:groove 2px;
   margin:0px;
   padding:0px;
+  cursor: pointer;
 }
 .greyout{
   color:rgb(181, 181, 181);

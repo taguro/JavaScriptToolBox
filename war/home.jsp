@@ -1,66 +1,57 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" %>
-<%@ page import="com.google.appengine.api.search.*" %>
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <title>BrowserJSEditor</title>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="jseditor.css">
-</head>
-<script>
-document.onclick = function (e){
-  document.getElementById('menutooltip').style.display='none';
-};
-function showToolTip(){
-document.getElementById('menutooltip').style.display='inline';
-document.getElementById('menutooltip').style.top='30px';
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
 
-return false;
-}
-</script>
-<body>
-  <div id="menubar">
-    <div class="cell menucell">
-      <a href="/home"><img class="icon" src="home.png"></a>
-      <a href="/create" target="mainframe"><img class="icon" src="add.png"></a>
-      <a href="#" onclick="window.setTimeout( 'showToolTip()', 10 );"><img class="icon" src="setting.png"></a>
-      <div id="menutooltip" style="display:none"><%= "true".equals(request.getAttribute("isLogin")) ? "<a href='/logout'>ログアウト</a>": "<a href='/home'>ログイン</a>" %></div>
-      <form name="searchform" class="searchform" method="get" action="#">
-        <input name="keywords" class="keywords" value="" type="text">
-        <input src="search.png" alt="検索" name="searchBtn" class="searchBtn" type="image">
-      </form>
-    </div>
-    <%
+	<servlet>
+        <servlet-name>javascriptsearch</servlet-name>
+        <servlet-class>jp.ktaguro.javaScriptToolBox.JavaScriptSearchServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>javascriptsearch</servlet-name>
+      <url-pattern>/home</url-pattern>
+    </servlet-mapping>
 
-    if(request.getAttribute("results")!=null){
-    @SuppressWarnings("unchecked")
-    Results<ScoredDocument> results =(Results<ScoredDocument>)request.getAttribute("results");
-    for(Document doc :results){
-    out.println("<div class='cell'>");
-    out.println("<span class='cellword'>");
-    out.println(doc.getOnlyField("title").getText());
-    out.println("</span>");
-    out.println("<div class='miniicons'><img class='miniicon' src='setting.png'></div>");
-    out.println("</div>");
-    }
-    }
+    <filter>
+      <filter-name>authentication</filter-name>
+      <filter-class>jp.ktaguro.javaScriptToolBox.AuthenticationFilter</filter-class>
+      <load-on-startup>2</load-on-startup>
+    </filter>
+	<filter-mapping>
+     <filter-name>authentication</filter-name>
+     <url-pattern>/home</url-pattern>
+	</filter-mapping>
 
-    %>
-    <%
-//    <div class="cell">
-//      <span class="cellword">Title</span>
-//      <div class="miniicons"><img class="miniicon" src="setting.png"></div>
-//    </div>
-//    <div class="cell">
-//      <span class="cellword">Title</span>
-//      <div class="miniicons"><img class="miniicon" src="add.png"><img class="miniicon" src="setting.png"></div>
-//    </div>
-//    <div class="cell">
-//      <span class="cellword greyout">Title</span>
-//      <div class="miniicons"><img class="miniicon" src="add.png"><img class="miniicon" src="setting.png"></div>
-//    </div>
-    %>
-  </div>
-  <iframe src="/create" class="mainframe" name="mainframe"></iframe>
-</body>
-</html>
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>jp.ktaguro.javaScriptToolBox.LogoutServlet</servlet-class>
+        <load-on-startup>3</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>logout</servlet-name>
+      <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>javascriptcreate</servlet-name>
+        <servlet-class>jp.ktaguro.javaScriptToolBox.JavaScriptCreateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>javascriptcreate</servlet-name>
+      <url-pattern>/create</url-pattern>
+    </servlet-mapping>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>jsp-file</web-resource-name>
+      <url-pattern>*.jsp</url-pattern>
+    </web-resource-collection>
+    <auth-constraint/>
+  </security-constraint>
+</web-app>
