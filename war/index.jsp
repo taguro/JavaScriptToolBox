@@ -22,10 +22,6 @@ return false;
 <body>
   <div id="menubar">
     <div class="cell menucell">
-      <a href="/home"><img class="icon" src="home.png"></a>
-      <a href="/create" target="mainframe"><img class="icon" src="add.png"></a>
-      <a href="#" onclick="window.setTimeout( 'showToolTip()', 10 );"><img class="icon" src="setting.png"></a>
-      <div id="menutooltip" style="display:none"><%= "true".equals(request.getAttribute("isLogin")) ? "<a href='/logout'>ログアウト</a>": "<a href='/home'>ログイン</a>" %></div>
       <form name="searchform" class="searchform" method="get" action="#">
         <input name="keywords" class="keywords" value="" type="text">
         <input src="search.png" alt="検索" name="searchBtn" class="searchBtn" type="image">
@@ -48,7 +44,6 @@ return false;
 					out.println("<span class='cellword'>");
 					out.println(doc.getOnlyField("title").getText());
 					out.println("</span>");
-					out.println("<div class='miniicons'><img class='miniicon' src='setting.png'></div>");
 					out.println("</div>");
 				}
 			}

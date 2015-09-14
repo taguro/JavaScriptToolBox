@@ -8,16 +8,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
-	<servlet>
-        <servlet-name>javascriptsearch</servlet-name>
-        <servlet-class>jp.ktaguro.javaScriptToolBox.JavaScriptSearchServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-      <servlet-name>javascriptsearch</servlet-name>
-      <url-pattern>/home</url-pattern>
-    </servlet-mapping>
-
     <servlet>
         <servlet-name>javascriptcreate</servlet-name>
         <servlet-class>jp.ktaguro.javaScriptToolBox.JavaScriptCreateServlet</servlet-class>

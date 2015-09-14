@@ -22,21 +22,22 @@ import com.google.appengine.api.users.UserServiceFactory;
 public class JavaScriptCreateServlet extends HttpServlet {
     private static final Index INDEX = SearchServiceFactory.getSearchService()
       .getIndex(IndexSpec.newBuilder().setName("shared_index"));
-  @Override
-  public void doGet(HttpServletRequest req, HttpServletResponse resp)
-      throws IOException, ServletException {
-	    String docId = req.getParameter("docId");
-	    Query query= Query.newBuilder().build("Id="+docId);
-		Results<ScoredDocument> results = INDEX.search(query);
-		req.setAttribute("results", results);
 
-        req.getRequestDispatcher("create.jsp").forward(req, resp);
-      }
+    @Override
+    public void doGet(HttpServletRequest req, HttpServletResponse resp)
+        throws IOException, ServletException {
+  	    String docId = req.getParameter("docId");
+  	    Query query= Query.newBuilder().build("Id="+docId);
+  		Results<ScoredDocument> results = INDEX.search(query);
+  		req.setAttribute("results", results);
+
+          req.getRequestDispatcher("create.jsp").forward(req, resp);
+        }
+    
   @Override
   public void doPost(HttpServletRequest req, HttpServletResponse resp)
 		  throws IOException, ServletException {
-      UserService service = UserServiceFactory.getUserService();
-      String userId=service.getCurrentUser().getUserId();
+
       String title=req.getParameter("title");
       String description=req.getParameter("description");
       String css=req.getParameter("css");
@@ -45,22 +46,12 @@ public class JavaScriptCreateServlet extends HttpServlet {
 
 
 	  Document.Builder docBuilder=Document.newBuilder()
-			  .addField(Field.newBuilder().setName("createUserId").setText(userId))
 			  .addField(Field.newBuilder().setName("title").setText(title))
 			  .addField(Field.newBuilder().setName("description").setText(description))
 			  .addField(Field.newBuilder().setName("css").setText(css))
 			  .addField(Field.newBuilder().setName("js").setText(js))
 			  .addField(Field.newBuilder().setName("tag").setText(tag))
 			  .addField(Field.newBuilder().setName("published").setDate(new Date()));
-//	    String tagStr = req.getParameter("tags");
-//
-//	    if (tagStr != null) {
-//	      StringTokenizer tokenizer = new StringTokenizer(tagStr, ",");
-//	      while (tokenizer.hasMoreTokens()) {
-//	        docBuilder.addField(Field.newBuilder().setName("tag")
-//	            .setAtom(tokenizer.nextToken()));
-//	      }
-//	    }
 
 	    Document doc = docBuilder.build();
 
