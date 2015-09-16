@@ -16,8 +16,6 @@ import com.google.appengine.api.search.Query;
 import com.google.appengine.api.search.Results;
 import com.google.appengine.api.search.ScoredDocument;
 import com.google.appengine.api.search.SearchServiceFactory;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 
 public class JavaScriptCreateServlet extends HttpServlet {
     private static final Index INDEX = SearchServiceFactory.getSearchService()
@@ -26,14 +24,14 @@ public class JavaScriptCreateServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
         throws IOException, ServletException {
-  	    String docId = req.getParameter("docId");
-  	    Query query= Query.newBuilder().build("Id="+docId);
+  	    String id = req.getParameter("id");
+  	    Query query= Query.newBuilder().build("Id="+id);
   		Results<ScoredDocument> results = INDEX.search(query);
   		req.setAttribute("results", results);
 
           req.getRequestDispatcher("create.jsp").forward(req, resp);
         }
-    
+
   @Override
   public void doPost(HttpServletRequest req, HttpServletResponse resp)
 		  throws IOException, ServletException {

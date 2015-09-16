@@ -7,7 +7,6 @@
   <link rel="stylesheet" type="text/css" href="jseditor.css">
 </head>
 <body>
-create
 <body>
 <script language="JavaScript">
 function buildScript(title,css,js,tag) {
@@ -15,7 +14,18 @@ function buildScript(title,css,js,tag) {
   window.open('data:text/html, <!DOCTYPE html><html lang="ja"><head><title>'+title+'</title><meta charset="UTF-8"><style type="text/css">'+css+'</style><script language="javascript">'+js+'<\/script></head><body>'+tag+'</body></html>',"_self")}</script>
 
 <form id="htmlForm" accept-charset="UTF-8" action="/create" method="POST">
+<pre>コンテンツの概要</pre>
+<textarea name="description" >
+/* Write description */
+
+</textarea><br/>
+<input type="button" value="開く" onclick="buildScript(document.getElementById('htmlForm').title.value,document.getElementById('htmlForm').css.value,document.getElementById('htmlForm').js.value,document.getElementById('htmlForm').tag.value);" />
+
 <pre>
+
+
+
+
 &lt;!DOCTYPE html&gt;
 &lt;html lang="ja"&gt;
 &lt;head&gt;
@@ -26,16 +36,6 @@ Write Title
 <pre>
   &lt;/title&gt;
   &lt;meta charset="UTF-8"&gt;
-  &lt;!--
-</pre>
-
-<textarea name="description" >
-/* Write description */
-
-</textarea>
-
-<pre>
-  --&gt;
   &lt;style  type="text/css"&gt;
 </pre>
 
@@ -73,8 +73,8 @@ Write Title
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
-<input type="button" value="run" onclick="buildScript(document.getElementById('htmlForm').title.value,document.getElementById('htmlForm').css.value,document.getElementById('htmlForm').js.value,document.getElementById('htmlForm').tag.value);" />
-<input type="submit" value="save"/>
+<input type="button" value="開く" onclick="buildScript(document.getElementById('htmlForm').title.value,document.getElementById('htmlForm').css.value,document.getElementById('htmlForm').js.value,document.getElementById('htmlForm').tag.value);" />
+<input type="submit" value="保存"/>
 </form>
 </body>
 </html>
