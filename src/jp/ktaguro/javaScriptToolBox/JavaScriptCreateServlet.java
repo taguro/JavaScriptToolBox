@@ -1,20 +1,22 @@
 package jp.ktaguro.javaScriptToolBox;
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.appengine.api.search.Document;
-import com.google.appengine.api.search.Field;
+import org.apache.commons.lang3.StringEscapeUtils;
+
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.search.Index;
 import com.google.appengine.api.search.IndexSpec;
-import com.google.appengine.api.search.Query;
-import com.google.appengine.api.search.Results;
-import com.google.appengine.api.search.ScoredDocument;
 import com.google.appengine.api.search.SearchServiceFactory;
 
 public class JavaScriptCreateServlet extends HttpServlet {
@@ -23,42 +25,58 @@ public class JavaScriptCreateServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
-        throws IOException, ServletException {
-  	    String id = req.getParameter("id");
-  	    Query query= Query.newBuilder().build("Id="+id);
-  		Results<ScoredDocument> results = INDEX.search(query);
-  		req.setAttribute("results", results);
+    		throws IOException, ServletException {
+    	String id = req.getParameter("id");
+    	if(id!=null){
+    		long id_long = Long.valueOf(id);
 
-          req.getRequestDispatcher("create.jsp").forward(req, resp);
-        }
+    		DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+
+    		Key key = KeyFactory.createKey("htmlFile", id_long);
+
+    		try {
+    			Entity result=datastoreService.get(key);
+    			long count = (long)result.getProperty("count")+1;
+    			result.setProperty("count", count);
+    			datastoreService.put(result);
+
+
+    			String html = (String) result.getProperty("html");
+    			html = StringEscapeUtils.escapeHtml3(html);
+
+    			String description = (String) result.getProperty("description");
+    			description = StringEscapeUtils.escapeHtml3(description);
+
+    			req.setAttribute("html", html);
+    			req.setAttribute("description", description);
+    			req.setAttribute("count", count);
+
+    		} catch (EntityNotFoundException e) {
+    			//ignore
+    		}
+    	}
+
+    	req.getRequestDispatcher("create.jsp").forward(req, resp);
+    }
 
   @Override
   public void doPost(HttpServletRequest req, HttpServletResponse resp)
 		  throws IOException, ServletException {
 
-      String title=req.getParameter("title");
+      String html=req.getParameter("html");
       String description=req.getParameter("description");
-      String css=req.getParameter("css");
-      String js=req.getParameter("js");
-      String tag=req.getParameter("tag");
 
 
-	  Document.Builder docBuilder=Document.newBuilder()
-			  .addField(Field.newBuilder().setName("title").setText(title))
-			  .addField(Field.newBuilder().setName("description").setText(description))
-			  .addField(Field.newBuilder().setName("css").setText(css))
-			  .addField(Field.newBuilder().setName("js").setText(js))
-			  .addField(Field.newBuilder().setName("tag").setText(tag))
-			  .addField(Field.newBuilder().setName("published").setDate(new Date()));
+      DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+      Entity entity = new Entity("htmlFile");
+      entity.setProperty("html", html);
+      entity.setProperty("description", description);//説明
+      entity.setProperty("count", 0);//表示回数
+      Key key = datastoreService.put(entity);
 
-	    Document doc = docBuilder.build();
-
-	    try {
-	      INDEX.put(doc);
-	    } catch (RuntimeException e) {
-	    	//ignore
-	    }
-        req.getRequestDispatcher("create.jsp").forward(req, resp);
+      String path = new String(req.getRequestURL())+"?id="+key.getId();
+      req.setAttribute("path", path);
+      req.getRequestDispatcher("create.jsp").forward(req, resp);
   }
 
 
