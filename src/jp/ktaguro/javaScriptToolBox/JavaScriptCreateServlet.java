@@ -70,12 +70,20 @@ public class JavaScriptCreateServlet extends HttpServlet {
       DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
       Entity entity = new Entity("htmlFile");
       entity.setProperty("html", html);
-      entity.setProperty("description", description);//説明
-      entity.setProperty("count", 0);//表示回数
+      entity.setProperty("description", description);// 説明
+      entity.setProperty("count", 0);// 表示回数
       Key key = datastoreService.put(entity);
 
-      String path = new String(req.getRequestURL())+"?id="+key.getId();
+      String path = new String(req.getRequestURL()) + "?id=" + key.getId();
       req.setAttribute("path", path);
+
+      html = StringEscapeUtils.escapeHtml3(html);
+
+      description = StringEscapeUtils.escapeHtml3(description);
+
+      req.setAttribute("html", html);
+      req.setAttribute("description", description);
+
       req.getRequestDispatcher("create.jsp").forward(req, resp);
   }
 

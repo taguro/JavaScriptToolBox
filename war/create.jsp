@@ -22,7 +22,9 @@ function buildScript(html) {
 <p><%=request.getAttribute("count")%>View</p>
 <% } %>
 
-<pre>コンテンツの概要</pre>
+<p>このページは、手軽にJavascriptを実行して共有するためのWebページです</p>
+<input type="button" value="Webページを開く" onclick="buildScript(document.getElementById('htmlForm').html.value);" />
+<h1>Webページの概要</h1>
 
 <textarea id="description" name="description" >
 <% if(request.getAttribute("description")!=null) { %>
@@ -32,9 +34,7 @@ function buildScript(html) {
 <% }%>
 </textarea><br/>
 
-<input type="button" value="開く" onclick="buildScript(document.getElementById('htmlForm').html.value);" />
-
-<pre>HTMLの内容</pre>
+<h1>Webページの内容</h1>
 <textarea id="html" name="html" >
 <% if(request.getAttribute("html")!=null) { %>
 <%=request.getAttribute("html")%>
@@ -79,7 +79,12 @@ function buildScript(html) {
 </textarea><br/>
 
 <input type="button" value="開く" onclick="buildScript(document.getElementById('htmlForm').html.value);" />
-<input type="submit" value="保存"/>
+<input type="submit" value="共有"/>
 </form>
+
+<p>注:HTMLの内容に、1行コメントと#は利用できないようです。削除機能は未実装</p>
+<a class="twitter-timeline"  href="https://twitter.com/hashtag/JavaScriptToolBox" data-widget-id="648484842452070400">#JavaScriptToolBox のツイート</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
 </body>
 </html>
