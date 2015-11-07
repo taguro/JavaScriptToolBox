@@ -17,6 +17,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
       <url-pattern>/create</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>preview</servlet-name>
+        <servlet-class>jp.ktaguro.javaScriptToolBox.JavaScriptPreviewServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>preview</servlet-name>
+      <url-pattern>/preview</url-pattern>
+    </servlet-mapping>
+
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>jsp-file</web-resource-name>

@@ -11,9 +11,14 @@
 <script language="JavaScript">
 function buildScript(html) {
   html=html.split(/\/\/.*\n/).join("");
-  window.open('data:text/html,'+html,"_self")}</script>
+  window.open('data:text/html,'+html,"_self")
+}
+function beforePreview() {
+	document.getElementById('previewHtml').value=document.getElementById('htmlForm').html.value;
+}
 
-<form id="htmlForm" accept-charset="UTF-8" action="/create" method="POST">
+</script>
+
 <% if(request.getAttribute("path")!=null) { %>
 <p>共有用のリンク：<%=request.getAttribute("path") %></p>
 <% } %>
@@ -23,7 +28,12 @@ function buildScript(html) {
 <% } %>
 
 <p>このページは、手軽にJavascriptを実行して共有するためのWebページです</p>
-<input type="button" value="Webページを開く" onclick="buildScript(document.getElementById('htmlForm').html.value);" />
+<form id="previewForm" accept-charset="UTF-8" action="/preview" method="GET">
+<input type="hidden" id="previewHtml" name="previewHtml"/>
+<input type="submit" value="Webページを開く" onclick="beforePreview()" />
+</form>
+
+<form id="htmlForm" accept-charset="UTF-8" action="/create" method="POST">
 <h1>Webページの概要</h1>
 
 <textarea id="description" name="description" >
@@ -78,11 +88,13 @@ function buildScript(html) {
 <% }%>
 </textarea><br/>
 
-<input type="button" value="開く" onclick="buildScript(document.getElementById('htmlForm').html.value);" />
+<input type="button" value="お気に入りに保存できる形式で開く" onclick="buildScript(document.getElementById('htmlForm').html.value);" />
 <input type="submit" value="共有"/>
 </form>
 
-<p>注:HTMLの内容に、1行コメントと#は利用できないようです。削除機能は未実装</p>
+
+
+<p>注:「お気に入りに保存できる形式で開く」では、HTMLの内容に1行コメントと#は利用できないようです</p>
 <a class="twitter-timeline"  href="https://twitter.com/hashtag/JavaScriptToolBox" data-widget-id="648484842452070400">#JavaScriptToolBox のツイート</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
