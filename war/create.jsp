@@ -45,10 +45,7 @@ function beforePreview() {
 </textarea><br/>
 
 <h1>Webページの内容</h1>
-<textarea id="html" name="html" >
-<% if(request.getAttribute("html")!=null) { %>
-<%=request.getAttribute("html")%>
-<% }else{ %>
+<textarea id="html" name="html" ><% if(request.getAttribute("html")!=null) { %><%=request.getAttribute("html")%><% }else{ %>
 &lt;!DOCTYPE html&gt;
 &lt;html lang="ja"&gt;
 &lt;head&gt;
@@ -83,10 +80,7 @@ function beforePreview() {
 
 
 &lt;/body&gt;
-&lt;/html&gt;
-
-<% }%>
-</textarea><br/>
+&lt;/html&gt;<% }%></textarea><br/>
 
 <input type="button" value="お気に入りに保存できる形式で開く" onclick="buildScript(document.getElementById('htmlForm').html.value);" />
 <input type="submit" value="共有"/>
