@@ -16,7 +16,7 @@ public class JavaScriptPreviewServlet extends HttpServlet {
       .getIndex(IndexSpec.newBuilder().setName("shared_index"));
 
     @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp)
+    public void doPost(HttpServletRequest req, HttpServletResponse resp)
     		throws IOException, ServletException {
     	String html=req.getParameter("previewHtml");
     	req.setAttribute("html", html);

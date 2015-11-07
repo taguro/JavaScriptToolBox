@@ -28,7 +28,7 @@ function beforePreview() {
 <% } %>
 
 <p>このページは、手軽にJavascriptを実行して共有するためのWebページです</p>
-<form id="previewForm" accept-charset="UTF-8" action="/preview" method="GET">
+<form id="previewForm" accept-charset="UTF-8" action="/preview" method="POST">
 <input type="hidden" id="previewHtml" name="previewHtml"/>
 <input type="submit" value="Webページを開く" onclick="beforePreview()" />
 </form>
